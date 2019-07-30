@@ -14,7 +14,7 @@ import {
   View,
   Text,
   StatusBar,
-  TextInput, TouchableOpacity
+  TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard
 } from 'react-native';
 
 const currencyPerRupee = {
@@ -38,10 +38,28 @@ export default class App extends React.Component {
       resultValue: '0.0'
     }
   }
+
+  buttonPressed(currency){
+    if(this.state.inputValue === ''){
+      alert("Enter some currency")
+    } else {
+
+      let result = parseFloat(this.state.inputValue) * currencyPerRupee[currency];
+
+      this.setState({ resultValue: result.toFixed(2) })
+
+
+    }
+  }
+
+  dismissKeyboard(){
+    Keyboard.dismiss()
+  }
   
   render(){
     return (
-      <SafeAreaView style={styles.container}>
+      <TouchableWithoutFeedback onPress={ () => this.dismissKeyboard() }>
+        <SafeAreaView style={styles.container}>
         <View style={styles.screenView}>
           <View style={styles.resultContainer}>
             <Text style={styles.resultValue}>
@@ -61,13 +79,46 @@ export default class App extends React.Component {
           </View>
 
           <View style={styles.converterButtonContainer}>
-            <TouchableOpacity style={styles.converterButton}>
+            <TouchableOpacity style={styles.converterButton} onPress={ () => this.buttonPressed("DOLLAR") }>
               <Text style={styles.converterButtonText}>$</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.converterButton} onPress={ () => this.buttonPressed("EURO") }>
+              <Text style={styles.converterButtonText}>Euro</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.converterButton} onPress={ () => this.buttonPressed("POUND") }>
+              <Text style={styles.converterButtonText}>POUND</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.converterButton} onPress={ () => this.buttonPressed("RUBEL") }>
+              <Text style={styles.converterButtonText}>RUBEL</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.converterButton} onPress={ () => this.buttonPressed("AUSDOLLAR") }>
+              <Text style={styles.converterButtonText}>AUSDOLLAR</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.converterButton} onPress={ () => this.buttonPressed("CANDOLLAR") }>
+              <Text style={styles.converterButtonText}>CANDOLLAR</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.converterButton} onPress={ () => this.buttonPressed("YEN") }>
+              <Text style={styles.converterButtonText}>YEN</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.converterButton} onPress={ () => this.buttonPressed("DINAR") }>
+              <Text style={styles.converterButtonText}>DINAR</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.converterButton} onPress={ () => this.buttonPressed("BITCOIN") }>
+              <Text style={styles.converterButtonText}>BITCOIN</Text>
             </TouchableOpacity>
             
           </View>
         </View>
       </SafeAreaView>
+      </TouchableWithoutFeedback>
       );
   }
 };
@@ -75,6 +126,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'gray'
   },
   screenView:{
     flex: 1,
